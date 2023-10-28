@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:to_do_final/pages/home_layout/bottom_navigation.dart';
 import 'package:to_do_final/pages/splash.dart';
 
 void main() {
@@ -16,7 +17,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: Splash.routeName,
       routes: {
-        Splash.routeName :(context) =>  Splash(),
+        Splash.routeName: (context) => const Splash(),
+        HomeLayout.routeName: (context) => const HomeLayout(),
       },
       home: Splash(),
 
