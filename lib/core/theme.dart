@@ -38,16 +38,19 @@ class ThemeApplication {
         type: BottomNavigationBarType.fixed,
         backgroundColor: Colors.transparent,
         elevation: 0,
-        selectedItemColor: Color(0xFF5D9CEC),
         selectedIconTheme: IconThemeData(
           color: Color(0xFF5D9CEC),
           size: 20,
         ),
-        unselectedItemColor: Color(0xFFC8C9CB),
+        selectedItemColor: Color(0xFF5D9CEC),
         unselectedIconTheme: IconThemeData(
           color: Color(0xFFC8C9CB),
           size: 20,
         ),
+        unselectedItemColor: Color(0xFFC8C9CB),
+      ),
+      floatingActionButtonTheme: const FloatingActionButtonThemeData(
+        backgroundColor: Color(0xFF5D9CEC),
       ));
 
   static ThemeData dark = ThemeData(
