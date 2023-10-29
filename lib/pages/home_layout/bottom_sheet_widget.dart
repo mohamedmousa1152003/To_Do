@@ -1,16 +1,33 @@
 import 'package:flutter/material.dart';
-
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+import 'package:to_do_final/core/network_layer/firestore_utils.dart';
+import 'package:to_do_final/core/provider.dart';
+import 'package:to_do_final/model/task_model.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../core/widget/text_form_field.dart';
 
-class BottomSheetView extends StatelessWidget {
-  TextEditingController titleController = TextEditingController();
-  TextEditingController describeController = TextEditingController();
-  final formKey = GlobalKey<FormState>();
+class BottomSheetView extends StatefulWidget {
 
   BottomSheetView({super.key});
 
   @override
+  State<BottomSheetView> createState() => _BottomSheetViewState();
+}
+
+class _BottomSheetViewState extends State<BottomSheetView> {
+  TextEditingController titleController = TextEditingController();
+
+  TextEditingController describeController = TextEditingController();
+
+  final formKey = GlobalKey<FormState>();
+
+  DateTime selectedData  = DateTime.now();
+
+  @override
   Widget build(BuildContext context) {
+    var appProvider = Provider.of<AppProvider>(context);
+   
     var theme = Theme.of(context);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -21,12 +38,12 @@ class BottomSheetView extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              "Add  new Task",
+             AppLocalizations.of(context)!.add_new_task,
               textAlign: TextAlign.center,
               style: theme.textTheme.titleLarge!.copyWith(color: Colors.black),
             ),
             CusrtomTextFormField(
-              title: "Enter your task title ",
+              title: AppLocalizations.of(context)!.enter_your_task_title,
               controller: titleController,
               validator: (value) {
                 if (value == null || value.trim().isEmpty) {
@@ -37,7 +54,7 @@ class BottomSheetView extends StatelessWidget {
               },
             ),
             CusrtomTextFormField(
-              title: "Enter your task describe ",
+              title: AppLocalizations.of(context)!.enter_your_task_describe,
               controller: describeController,
               validator: (value) {
                 if (value == null || value.trim().isEmpty) {
@@ -51,7 +68,7 @@ class BottomSheetView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text(
-                  "Add  new Task",
+                  AppLocalizations.of(context)!.select_time,
                   style:
                       theme.textTheme.titleLarge!.copyWith(color: Colors.black),
                 ),
@@ -60,7 +77,8 @@ class BottomSheetView extends StatelessWidget {
                     showCalender(context);
                   },
                   child: Text(
-                    "25 oct 2023",
+                    DateFormat.yMMMd().format(selectedData),
+
                     textAlign: TextAlign.center,
                     style: theme.textTheme.titleMedium!
                         .copyWith(color: theme.primaryColor),
@@ -72,14 +90,21 @@ class BottomSheetView extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: theme.primaryColor,
                 ),
-                onPressed: () {
+                onPressed: () async{
                   if (formKey.currentState!.validate()) {
+                    var model = TaskModel(
+                        title: titleController.text,
+                        description: describeController.text,
+                        dateTime: DateTime.now(),
+                        isDone: false);
+                    await FirestoreUtils.addDataToFireStore(model);
+                    Navigator.pop(context);
                     print(titleController.text);
                   }
                   print(describeController.text);
                 },
                 child: Text(
-                  "Add Task",
+                  AppLocalizations.of(context)!.add_task,
                   style: theme.textTheme.titleLarge,
                 )),
           ],
@@ -87,12 +112,19 @@ class BottomSheetView extends StatelessWidget {
       ),
     );
   }
+
+  void showCalender(context) async{
+    var dateSelected = await showDatePicker(
+      context: context,
+      firstDate: DateTime.now(),
+      lastDate: DateTime.now().add(const Duration(days: 365)),
+    );
+    if(dateSelected ==null) return ;
+    selectedData=dateSelected ;
+      setState(() {
+      });
+  }
 }
 
-void showCalender(context) {
-  showDatePicker(
-    context: context,
-    firstDate: DateTime.now(),
-    lastDate: DateTime.now().add(const Duration(days: 365)),
-  );
-}
+
+

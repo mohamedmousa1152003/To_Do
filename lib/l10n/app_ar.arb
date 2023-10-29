@@ -1,0 +1,19 @@
+{
+
+    "language" : "اللغة" ,
+   "theme_mode" : "النمط",
+    "dark" : "ليلي",
+    "light" : "نهاري",
+    "add_new_task" : " اضافة نص جديد",
+    "enter_your_task_title" :"اضافة عنوان ",
+    "enter_your_task_describe" :"اضافة وصف ",
+    "select_time" : "تحديد الوقت",
+    "to_do_list" : "عمل قائمة",
+    "add_task" : "اضافة النص  " ,
+    "delete" : "حذف"
+    
+
+    
+
+
+}

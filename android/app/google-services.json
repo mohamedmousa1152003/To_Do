@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "64192831640",
+    "project_id": "todo-cabe8",
+    "storage_bucket": "todo-cabe8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:64192831640:android:b8bc921079ec56abee30ed",
+        "android_client_info": {
+          "package_name": "com.example.to_do_final"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTQyPDMpF6s-nTIgmYOpeKBazdrVE4P_c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

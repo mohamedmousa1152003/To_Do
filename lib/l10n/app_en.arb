@@ -1,0 +1,15 @@
+{
+
+    "language" : "Language" ,
+    "theme_mode" : "Theme Mode",
+    "dark" : "Dark",
+    "light" : "Light",
+    "add_new_task" : "Add new Task",
+    "enter_your_task_title" : "Enter your task title",
+    "enter_your_task_describe" : "Enter your task describe",
+    "select_time" : "Select time",
+    "to_do_list" : "To Do List",
+    "add_task" : "Add Task " ,
+    "delete" : "Delete"
+
+}

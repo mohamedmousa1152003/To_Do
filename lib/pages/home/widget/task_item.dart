@@ -1,11 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:provider/provider.dart';
+import 'package:to_do_final/core/network_layer/firestore_utils.dart';
+
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:to_do_final/core/provider.dart';
+import 'package:to_do_final/core/theme.dart';
+
+import '../../../model/task_model.dart';
 
 class Task extends StatelessWidget {
-  const Task({super.key});
+  final TaskModel taskModel ;
+   Task ({super.key ,required this.taskModel});
+
 
   @override
   Widget build(BuildContext context) {
+      var appProvider = Provider.of<AppProvider>(context);
+      var locale = AppLocalizations.of(context)!;
     var theme = Theme.of(context);
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
@@ -20,21 +32,23 @@ class Task extends StatelessWidget {
             SlidableAction(
               // An action can be bigger than the others.
               flex: 2,
-              onPressed: (context) {},
+              onPressed: (context) async{
+                await  FirestoreUtils.deleteDataToFireStore(taskModel);
+              },
               borderRadius: BorderRadius.circular(13),
               backgroundColor: const Color(0xFFEC4B4B),
               foregroundColor: Colors.white,
               icon: Icons.delete,
-              label: 'Delete',
+              label: locale.delete,
             ),
           ],
         ),
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          height: 115,
+          height: 120,
           width: double.infinity,
           decoration: BoxDecoration(
-            color: Colors.white,
+            color:  appProvider.isDark() ? Color(0xFF141922):Colors.white,
             borderRadius: BorderRadius.circular(10),
           ),
           child: Row(
@@ -54,7 +68,13 @@ class Task extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Text(
-                    "Play basket ball ",
+                    taskModel.title,
+                    style: theme.textTheme.titleMedium?.copyWith(
+                      color: theme.primaryColor,
+                    ),
+                  ),
+                  Text(
+                    taskModel.description,
                     style: theme.textTheme.titleMedium?.copyWith(
                       color: theme.primaryColor,
                     ),
@@ -62,11 +82,11 @@ class Task extends StatelessWidget {
                   const SizedBox(height: 20),
                   Row(
                     children: [
-                      const Icon(Icons.alarm),
+                      Icon(Icons.alarm ,color: appProvider.isDark() ? Colors.white: Colors.black ,),
                       const SizedBox(width: 5),
                       Text(
                         "10:30 AM ",
-                        style: theme.textTheme.titleSmall,
+                        style: TextStyle(color: appProvider.isDark() ? Colors.white: Colors.black )  ,
                       ),
                     ],
                   ),
